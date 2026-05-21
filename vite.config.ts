@@ -5,6 +5,8 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    assetsInlineLimit: 4096,
+  },
+  optimizeDeps: {
+    include: ['pdf-lib']
   }
 })
