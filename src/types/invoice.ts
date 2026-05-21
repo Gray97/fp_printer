@@ -8,8 +8,8 @@ export interface Invoice {
   amount?: number;
   date?: string;
   code?: string;
-  preview?: string; // base64
+  preview?: string;
   ocrText?: string;
 }
 
-export type LayoutMode = 2 | 3 | 4; // 每页张数
+export type LayoutMode = 2 | 3 | 4;
