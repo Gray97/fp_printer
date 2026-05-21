@@ -31,7 +31,7 @@ export const InvoicePreview: React.FC<Props> = ({ invoices, layout }) => {
           }}
         >
           {Array.from({ length: Math.ceil(invoices.length / layout) }).map((_, rowIdx) => (
-            <div key={rowIdx} className="flex" style={{ minHeight: `${100 / Math.ceil(invoices.length / layout)}%` }}>
+            <div key={rowIdx} className="flex">
               {Array.from({ length: layout }).map((_, colIdx) => {
                 const idx = rowIdx * layout + colIdx;
                 const inv = invoices[idx];
