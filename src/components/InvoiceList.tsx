@@ -12,12 +12,7 @@ interface Props {
 }
 
 export const InvoiceList: React.FC<Props> = ({
-  invoices,
-  onDelete,
-  onConfirm,
-  onToggleSelect,
-  onSelectAll,
-  selectedIds,
+  invoices, onDelete, onConfirm, onToggleSelect, onSelectAll, selectedIds,
 }) => {
   const allSelected = invoices.length > 0 && selectedIds.size === invoices.length;
 
@@ -30,7 +25,6 @@ export const InvoiceList: React.FC<Props> = ({
 
   return (
     <div className="space-y-3">
-      {/* 批量操作栏 */}
       {invoices.length > 0 && (
         <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
           <label className="flex items-center gap-2 cursor-pointer">
@@ -42,19 +36,18 @@ export const InvoiceList: React.FC<Props> = ({
             />
             <span className="text-sm font-medium text-gray-700">全选</span>
           </label>
-
           <div className="flex gap-2">
             <button
               onClick={() => selectedIds.forEach(id => onConfirm(id))}
               disabled={selectedIds.size === 0}
-              className="px-3 py-1.5 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 disabled:opacity-50 transition-colors"
+              className="px-3 py-1.5 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 disabled:opacity-50"
             >
               批量确认 ({selectedIds.size})
             </button>
             <button
               onClick={() => selectedIds.forEach(id => onDelete(id))}
               disabled={selectedIds.size === 0}
-              className="px-3 py-1.5 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 disabled:opacity-50 transition-colors"
+              className="px-3 py-1.5 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 disabled:opacity-50"
             >
               批量删除 ({selectedIds.size})
             </button>
@@ -62,7 +55,6 @@ export const InvoiceList: React.FC<Props> = ({
         </div>
       )}
 
-      {/* 发票列表 */}
       <div className="space-y-2 max-h-[60vh] overflow-y-auto pr-1">
         {invoices.map((inv) => {
           const config = statusConfig[inv.status];
@@ -73,19 +65,16 @@ export const InvoiceList: React.FC<Props> = ({
               key={inv.id}
               className={`
                 flex items-center gap-3 p-3 bg-white border rounded-xl
-                transition-all duration-200 hover:shadow-md
                 ${selectedIds.has(inv.id) ? 'ring-2 ring-blue-500 border-blue-300' : 'border-gray-200'}
               `}
             >
-              {/* 复选框 */}
               <input
                 type="checkbox"
                 checked={selectedIds.has(inv.id)}
                 onChange={() => onToggleSelect(inv.id)}
-                className="w-4 h-4 accent-blue-500 flex-shrink-0"
+                className="w-4 h-4 accent-blue-500"
               />
 
-              {/* 预览缩略图 */}
               <div className="w-12 h-12 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
                 {inv.preview ? (
                   <img src={inv.preview} alt="" className="w-full h-full object-cover" />
@@ -96,14 +85,11 @@ export const InvoiceList: React.FC<Props> = ({
                 )}
               </div>
 
-              {/* 信息 */}
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate">{inv.name}</p>
                 <div className="flex items-center gap-2 mt-1">
                   {inv.amount && (
-                    <span className="text-xs text-red-600 font-semibold">
-                      ¥{inv.amount.toFixed(2)}
-                    </span>
+                    <span className="text-xs text-red-600 font-semibold">¥{inv.amount.toFixed(2)}</span>
                   )}
                   {inv.date && (
                     <span className="text-xs text-gray-500">{inv.date}</span>
@@ -111,28 +97,18 @@ export const InvoiceList: React.FC<Props> = ({
                 </div>
               </div>
 
-              {/* 状态标签 */}
               <span className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full ${config.color}`}>
                 <StatusIcon size={12} />
                 {config.label}
               </span>
 
-              {/* 操作按钮 */}
               <div className="flex gap-1 flex-shrink-0">
                 {inv.status === 'pending' && (
-                  <button
-                    onClick={() => onConfirm(inv.id)}
-                    className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                    title="确认"
-                  >
+                  <button onClick={() => onConfirm(inv.id)} className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg">
                     <Check size={16} />
                   </button>
                 )}
-                <button
-                  onClick={() => onDelete(inv.id)}
-                  className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  title="删除"
-                >
+                <button onClick={() => onDelete(inv.id)} className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg">
                   <Trash2 size={16} />
                 </button>
               </div>
@@ -151,12 +127,9 @@ export const InvoiceList: React.FC<Props> = ({
   );
 };
 
-// 辅助图标组件
 const FileImage = ({ size, className }: { size: number; className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
     <polyline points="14 2 14 8 20 8" />
-    <line x1="16" y1="13" x2="8" y2="13" />
-    <line x1="16" y1="17" x2="8" y2="17" />
   </svg>
 );
